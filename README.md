@@ -1,6 +1,7 @@
 # birthday-app
 
 TODO:
+- logger
 - тема
 - компоненты
   - стандартные
