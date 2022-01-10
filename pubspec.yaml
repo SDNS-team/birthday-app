@@ -24,6 +24,9 @@ dependencies:
   freezed_annotation: ^1.1.0
   flutter_riverpod: ^2.0.0-dev.0
 
+  # see analysis_options.yaml
+  dart_code_metrics: ^4.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

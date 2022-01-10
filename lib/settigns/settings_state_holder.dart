@@ -1,5 +1,6 @@
 import 'package:state_notifier/state_notifier.dart';
 
+import '../skin_switcher/skin.dart';
 import 'settings.dart';
 
 class SettingsStateHolder extends StateNotifier<Settings> {

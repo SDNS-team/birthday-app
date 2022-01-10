@@ -1,11 +1,17 @@
-import 'package:birthday_app/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'settings.dart';
+import '../providers.dart';
+import '../skin_switcher/skin.dart';
 
 class SettingsInteractor {
-  void setSkin(WidgetRef ref, Skin skin) {
+  Future<void> setSkin(WidgetRef ref, bool isIPhone) async {
+    final pageStateHolder = ref.watch(settingsPageStateHolder.notifier);
+    pageStateHolder.setIPhone1Skin(isIPhone);
+
+    // wait for switcher animation
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+
     final stateHolder = ref.read(settingsStateProvider.notifier);
-    stateHolder.setSkin(skin);
+    stateHolder.setSkin(isIPhone ? Skin.iphone1 : Skin.classic);
   }
 }
