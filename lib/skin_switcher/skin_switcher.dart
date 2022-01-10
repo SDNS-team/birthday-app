@@ -1,8 +1,8 @@
-import 'package:birthday_app/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'settigns/settings.dart';
+import '../providers.dart';
+import 'skin.dart';
 
 /// Переключает скины приложения.
 class SkinSwitcher extends ConsumerWidget {
@@ -18,6 +18,7 @@ class SkinSwitcher extends ConsumerWidget {
     if (builder != null) {
       return builder(context);
     }
+
     return const _UnknownSkin();
   }
 }

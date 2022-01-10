@@ -1,7 +1,7 @@
-import 'package:birthday_app/utils/random_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/random_color.dart';
 import '../contacts_interactor.dart';
 
 class FriendsIphone1Page extends StatelessWidget {

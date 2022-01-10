@@ -16,7 +16,7 @@ Future<void> initializeIzar() async {
 
   try {
     dir = await getTemporaryDirectory();
-  } catch (ex) {
+  } on Exception catch (_) {
     print('fuck this');
   } finally {
     dir ??= Directory.current;
