@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../providers.dart';
 import '../../../skin_switcher/skin.dart';
 import '../concrete_skin.dart';
-import 'page_skins.dart';
+import 'widget_skins.dart';
 
 class ClassicScaffold extends ConsumerStatefulWidget {
   const ClassicScaffold({Key? key, required this.bottomPages})
@@ -30,8 +30,10 @@ class _ClassicScaffoldState extends ConsumerState<ClassicScaffold>
       body: widget.bottomPages[current].skins.build(skin, context),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: current,
-        items: widget.bottomPages.map((p) => p.navigationBarItem).toList(),
-        onTap: (index) => setState(() => stateHolder.navigateTo(index)),
+        items: widget.bottomPages
+            .map((p) => p.navigationBarItemSkins.get(skin))
+            .toList(),
+        onTap: (index) => stateHolder.navigateTo(index),
         showSelectedLabels: false,
         showUnselectedLabels: false,
       ),

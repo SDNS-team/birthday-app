@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../utils/random_color.dart';
 import '../contacts_interactor.dart';
 
+final _pageKey = GlobalKey();
+
 class FriendsPage extends StatelessWidget {
   const FriendsPage({Key? key, required this.interactor}) : super(key: key);
 
@@ -11,6 +13,7 @@ class FriendsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _pageKey,
       appBar: _buildAppBar(context),
       body: _buildBody(context),
     );
@@ -24,7 +27,7 @@ class FriendsPage extends StatelessWidget {
           interactor.addContact(context);
         },
       ),
-      title: const Text('LOGO'),
+      title: const FlutterLogo(),
       actions: [
         IconButton(
           icon: const Icon(Icons.settings),
