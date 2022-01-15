@@ -1,27 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../skin_switcher/skin.dart';
+import 'skin.dart';
+import 'skin_builder.dart';
 
 class TabPageSkins {
   final SafeSkinGetter<BottomNavigationBarItem> navigationBarItemSkins;
-  final WidgetSkinBuilder skins;
+  final SkinnedBuilder skinnedBuilder;
 
   const TabPageSkins({
     required this.navigationBarItemSkins,
-    required this.skins,
+    required this.skinnedBuilder,
   });
-}
-
-class WidgetSkinBuilder {
-  final SafeSkinGetter<WidgetBuilder> skins;
-
-  const WidgetSkinBuilder(this.skins);
-
-  Widget build(Skin skin, BuildContext context) {
-    final builder = skins.get(skin);
-
-    return builder(context);
-  }
 }
 
 class SafeSkinGetter<T> {

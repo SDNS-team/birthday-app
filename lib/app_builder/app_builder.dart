@@ -4,13 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/skins/scaffold/scaffold_classic.dart';
 import '../components/skins/scaffold/scaffold_iphone1.dart';
-import '../components/skins/scaffold/widget_skins.dart';
+import '../components/skins/skin_builder.dart';
+import '../components/skins/widget_skins.dart';
 import '../friends/page/friends_classic.dart';
 import '../friends/page/friends_ipone1.dart';
 import '../providers.dart';
 import '../settigns/page/settings_classic.dart';
 import '../settigns/page/settings_iphone1.dart';
-import '../skin_switcher/skin_switcher.dart';
 
 class AppBuilder extends StatefulWidget {
   const AppBuilder({Key? key}) : super(key: key);
@@ -46,8 +46,8 @@ class BottomNavBuilder extends ConsumerWidget {
         classic: _navItem(Icons.contacts, 'Friends'),
         iphone1: _navItem(CupertinoIcons.person_2, 'Friends'),
       ),
-      skins: WidgetSkinBuilder(
-        SafeSkinGetter(
+      skinnedBuilder: SkinnedBuilder(
+        skins: SafeSkinGetter(
           classic: (context) => FriendsPage(interactor: fInteractor),
           iphone1: (context) => FriendsIphone1Page(interactor: fInteractor),
         ),
@@ -59,8 +59,8 @@ class BottomNavBuilder extends ConsumerWidget {
         classic: _navItem(Icons.settings, 'Settings'),
         iphone1: _navItem(CupertinoIcons.settings, 'Settings'),
       ),
-      skins: WidgetSkinBuilder(
-        SafeSkinGetter(
+      skinnedBuilder: SkinnedBuilder(
+        skins: SafeSkinGetter(
           classic: (context) => SettingsPage(interactor: sInteractor),
           iphone1: (context) => SettingsIphone1Page(interactor: sInteractor),
         ),
@@ -69,12 +69,10 @@ class BottomNavBuilder extends ConsumerWidget {
 
     final pages = [friendsPage, settingsPage];
 
-    return SkinSwitcher(
-      skinBuilder: WidgetSkinBuilder(
-        SafeSkinGetter(
-          classic: (context) => ClassicScaffold(bottomPages: pages),
-          iphone1: (context) => IPhoneScaffold(bottomPages: pages),
-        ),
+    return SkinnedBuilder(
+      skins: SafeSkinGetter(
+        classic: (context) => ClassicScaffold(bottomPages: pages),
+        iphone1: (context) => IPhoneScaffold(bottomPages: pages),
       ),
     );
   }

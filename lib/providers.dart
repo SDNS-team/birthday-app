@@ -8,8 +8,7 @@ import 'settigns/settings.dart';
 import 'settigns/settings_interactor.dart';
 import 'settigns/settings_state_holder.dart';
 
-final settingsStateProvider =
-    StateNotifierProvider<SettingsStateHolder, Settings>(
+final settingsProvider = StateNotifierProvider<SettingsStateHolder, Settings>(
   (ref) => SettingsStateHolder(const Settings()),
 );
 
