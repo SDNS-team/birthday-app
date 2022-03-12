@@ -220,7 +220,7 @@ linter:
     - slash_for_doc_comments # https://dart-lang.github.io/linter/lints/slash_for_doc_comments.html
     - sort_child_properties_last # https://dart-lang.github.io/linter/lints/sort_child_properties_last.html
     #    - sort_constructors_first # https://dart-lang.github.io/linter/lints/sort_constructors_first.html
-    - sort_unnamed_constructors_first # https://dart-lang.github.io/linter/lints/sort_unnamed_constructors_first.html
+    # - sort_unnamed_constructors_first # https://dart-lang.github.io/linter/lints/sort_unnamed_constructors_first.html
     - tighten_type_of_initializing_formals # https://dart-lang.github.io/linter/lints/tighten_type_of_initializing_formals.html
     - type_annotate_public_apis # https://dart-lang.github.io/linter/lints/type_annotate_public_apis.html
     - type_init_formals # https://dart-lang.github.io/linter/lints/type_init_formals.html

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../components/skins/skin.dart';
 import '../providers.dart';
-import '../skin_switcher/skin.dart';
 
 class SettingsInteractor {
   Future<void> setSkin(WidgetRef ref, bool isIPhone) async {
@@ -11,7 +11,7 @@ class SettingsInteractor {
     // wait for switcher animation
     await Future<void>.delayed(const Duration(milliseconds: 300));
 
-    final stateHolder = ref.read(settingsStateProvider.notifier);
+    final stateHolder = ref.read(settingsProvider.notifier);
     stateHolder.setSkin(isIPhone ? Skin.iphone1 : Skin.classic);
   }
 }

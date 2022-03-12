@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../../utils/random_color.dart';
 import '../contacts_interactor.dart';
 
+final _pageKey = GlobalKey();
+
 class FriendsIphone1Page extends StatelessWidget {
   const FriendsIphone1Page({Key? key, required this.interactor})
       : super(key: key);
@@ -13,31 +15,30 @@ class FriendsIphone1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: _buildAppBar(context),
+      key: _pageKey,
+      navigationBar: _buildNavBar(context),
       child: _buildBody(context),
     );
   }
 
-  CupertinoNavigationBar _buildAppBar(BuildContext context) {
+  CupertinoNavigationBar _buildNavBar(BuildContext context) {
     return CupertinoNavigationBar(
+      backgroundColor: Colors.white.withOpacity(0.5),
       leading: CupertinoButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          interactor.addContact(context);
-        },
+        child: const Icon(CupertinoIcons.add),
+        onPressed: () => interactor.addContact(context),
       ),
-      middle: const Text('LOGO'),
+      middle: const FlutterLogo(),
       trailing: CupertinoButton(
-        child: const Icon(Icons.settings),
-        onPressed: () {
-          interactor.openSettings(context);
-        },
+        child: const Icon(CupertinoIcons.settings),
+        onPressed: () => interactor.openSettings(context),
       ),
     );
   }
 
   Widget _buildBody(BuildContext context) {
     return ListView.builder(
+      physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return ListTile(
           leading: CircleAvatar(

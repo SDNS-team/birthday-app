@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../providers.dart';
-import '../../../skin_switcher/skin.dart';
 import '../concrete_skin.dart';
-import 'page_skins.dart';
+import '../skin.dart';
+import '../widget_skins.dart';
 
 class IPhoneScaffold extends ConsumerStatefulWidget {
   const IPhoneScaffold({Key? key, required this.bottomPages}) : super(key: key);
@@ -28,12 +28,14 @@ class _IPhoneScaffoldState extends ConsumerState<IPhoneScaffold>
 
     return CupertinoTabScaffold(
       tabBuilder: (context, idx) => Material(
-        child: widget.bottomPages[idx].skins.build(skin, context),
+        child: widget.bottomPages[idx].skinnedBuilder,
       ),
       tabBar: CupertinoTabBar(
         currentIndex: current,
-        items: widget.bottomPages.map((p) => p.navigationBarItem).toList(),
-        onTap: (index) => setState(() => stateHolder.navigateTo(index)),
+        items: widget.bottomPages
+            .map((p) => p.navigationBarItemSkins.get(skin))
+            .toList(),
+        onTap: (index) => stateHolder.navigateTo(index),
       ),
     );
   }

@@ -12,7 +12,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Birthday App Demo',
         theme: ThemeData(
-          primarySwatch: Colors.orange,
+          primarySwatch: Colors.blue,
         ),
         home: const AppBuilder(),
       ),
