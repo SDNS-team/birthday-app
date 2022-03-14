@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/random_color.dart';
-import '../contacts_interactor.dart';
+import '../../../utils/random_color.dart';
+import '../components/friend_list.dart';
+import '../friends_interactor.dart';
 
 final _pageKey = GlobalKey();
 
@@ -17,7 +18,7 @@ class FriendsIphone1Page extends StatelessWidget {
     return CupertinoPageScaffold(
       key: _pageKey,
       navigationBar: _buildNavBar(context),
-      child: _buildBody(context),
+      child: FriendsList(interactor: interactor),
     );
   }
 

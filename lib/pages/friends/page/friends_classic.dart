@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/random_color.dart';
-import '../contacts_interactor.dart';
+import '../components/friend_list.dart';
+import '../friends_interactor.dart';
 
 final _pageKey = GlobalKey();
 
@@ -15,7 +15,7 @@ class FriendsPage extends StatelessWidget {
     return Scaffold(
       key: _pageKey,
       appBar: _buildAppBar(context),
-      body: _buildBody(context),
+      body: FriendsList(interactor: interactor),
     );
   }
 
@@ -36,20 +36,6 @@ class FriendsPage extends StatelessWidget {
           },
         ),
       ],
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundColor: randomColor(),
-          ),
-          title: const Text('Имя Фамилия'),
-          trailing: const Text('28.03'),
-        );
-      },
     );
   }
 }

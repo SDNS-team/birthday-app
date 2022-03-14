@@ -6,11 +6,11 @@ import '../components/skins/scaffold/scaffold_classic.dart';
 import '../components/skins/scaffold/scaffold_iphone1.dart';
 import '../components/skins/skin_builder.dart';
 import '../components/skins/widget_skins.dart';
-import '../friends/page/friends_classic.dart';
-import '../friends/page/friends_ipone1.dart';
+import '../pages/friends/page/friends_classic.dart';
+import '../pages/friends/page/friends_ipone1.dart';
+import '../pages/settigns/page/settings_classic.dart';
+import '../pages/settigns/page/settings_iphone1.dart';
 import '../providers.dart';
-import '../settigns/page/settings_classic.dart';
-import '../settigns/page/settings_iphone1.dart';
 
 class AppBuilder extends StatefulWidget {
   const AppBuilder({Key? key}) : super(key: key);

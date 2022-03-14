@@ -56,7 +56,7 @@ dart_code_metrics:
     # Common
     - avoid-non-null-assertion:
         severity: error
-    - newline-before-return
+    # - newline-before-return
     - no-boolean-literal-compare
     - no-empty-block
     - prefer-trailing-comma

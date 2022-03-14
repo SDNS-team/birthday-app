@@ -2,28 +2,34 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
-import 'package:isar_connect/isar_connect.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'db/friend.dart';
+import 'db/note.dart';
+import 'db/photo.dart';
+import 'db/user.dart';
 
 late final Isar isar;
 
-Future<void> initializeIzar() async {
-  if (kDebugMode) {
-    initializeIsarConnect();
-  }
-
+Future<Isar> initializeIzar() async {
   Directory? dir;
 
   try {
-    dir = await getTemporaryDirectory();
+    dir = await getApplicationDocumentsDirectory();
   } on Exception catch (_) {
     print('fuck this');
   } finally {
     dir ??= Directory.current;
   }
 
-  isar = await Isar.open(
-    schemas: [],
+  return Isar.open(
+    schemas: [
+      FriendSchema,
+      UserSchema,
+      NoteSchema,
+      PhotoSchema,
+    ],
     directory: dir.path,
+    inspector: kDebugMode,
   );
 }

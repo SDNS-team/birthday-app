@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../components/skins/skin.dart';
+import '../../components/skins/skin.dart';
 
 part 'settings.freezed.dart';
 

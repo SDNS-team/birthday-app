@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
+
+import 'friends_source.dart';
 
 typedef FriendsPageBuilder = Widget Function({
   Key? key,
@@ -6,6 +9,10 @@ typedef FriendsPageBuilder = Widget Function({
 });
 
 class FriendsInteractor {
+  FriendsInteractor(this.isar);
+  final Isar isar;
+  FriendsListSource source() => FriendsListSource(isar);
+
   Future<void> addContact(BuildContext context) {
     return showDialog(
       context: context,

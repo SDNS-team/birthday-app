@@ -1,9 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar/isar.dart';
 
-import '../components/skins/skin.dart';
-import '../providers.dart';
+import '../../components/skins/skin.dart';
+import '../../providers.dart';
 
 class SettingsInteractor {
+  SettingsInteractor(this.isar);
+  final Isar isar;
+
   Future<void> setSkin(WidgetRef ref, bool isIPhone) async {
     final pageStateHolder = ref.watch(settingsPageStateHolder.notifier);
     pageStateHolder.setIPhone1Skin(isIPhone);
