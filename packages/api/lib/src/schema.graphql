@@ -1,0 +1,197 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Tokens {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deleted: Boolean!
+  name: String
+  provider: AuthProviderEnum
+  email: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum AuthProviderEnum {
+  GOOGLE
+  FACEBOOK
+  APPLE
+}
+
+type Note {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deleted: Boolean!
+  friendId: String!
+  description: String!
+}
+
+type Friend {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deleted: Boolean!
+  name: String!
+  birthday: DateTime!
+  description: String
+  notes: [Note!]
+}
+
+type Query {
+  refresh: Tokens!
+  findOneUser(where: UserFindOneWhereInput): User!
+
+  """Find one friend current user"""
+  findOneFriend(where: FriendFindOneWhereInput): Friend!
+
+  """Find friends current user"""
+  findManyFriend(where: FriendFindManyWhereInput, orderBy: FriendOrderInput, take: Int, skip: Int): [Friend!]!
+}
+
+input UserFindOneWhereInput {
+  id: String
+}
+
+input FriendFindOneWhereInput {
+  id: String
+}
+
+input FriendFindManyWhereInput {
+  AND: [FriendFindManyWhereInput!]
+  OR: [FriendFindManyWhereInput!]
+  NOT: [FriendFindManyWhereInput!]
+  createdAt: DateTimeFilter
+  name: StringFilter
+  birthday: DateTimeFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input FriendOrderInput {
+  createdAt: SortOrder
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+type Mutation {
+  editUser(data: UserEditInput!, where: UserWhereUniqueInput!): User!
+  createFriend(data: FriendCreateInput!): Friend!
+  editFriend(data: FriendEditInput!, where: FriendWhereUniqueInput!): Friend!
+  removeFriend(where: FriendWhereUniqueInput!): Boolean!
+  createNote(data: NoteCreateInput!): Note!
+  removeNote(where: NoteWhereUniqueInput!): Boolean!
+}
+
+input UserEditInput {
+  name: StringFieldUpdateOperationsInput
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input UserWhereUniqueInput {
+  id: String
+}
+
+input FriendCreateInput {
+  name: String!
+  birthday: DateTime!
+  description: String
+  userId: String!
+}
+
+input FriendEditInput {
+  name: StringFieldUpdateOperationsInput
+  birthday: DateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+}
+
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
+}
+
+input FriendWhereUniqueInput {
+  id: String
+}
+
+input NoteCreateInput {
+  friendId: String!
+  description: String!
+}
+
+input NoteWhereUniqueInput {
+  id: String
+}
