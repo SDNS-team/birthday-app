@@ -10,7 +10,7 @@ abstract class Opt<T extends Object> {
   T? nullable();
   T valueOrDefault(T def);
 
-  static ChainedException _illegalAccess() => const ChainedException.origin(
+  static ChainedException _illegalAccess() => ChainedException.origin(
         'Opt.get() has been called without verifying that Opt.has() returned true!',
       );
 }
