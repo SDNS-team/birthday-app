@@ -1,11 +1,12 @@
 part of 'chained_exception.dart';
 
-class _ChainedExceptionFormatter {
+class _PrintedChainedException {
   final ChainedException _ex;
 
-  const _ChainedExceptionFormatter(this._ex);
+  const _PrintedChainedException(this._ex);
 
-  String formatted() {
+  @override
+  String toString() {
     final buffer = StringBuffer();
     buffer.writeln();
     buffer.writeln('--------------------- Exception ---------------------');

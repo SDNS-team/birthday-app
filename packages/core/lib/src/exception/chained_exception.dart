@@ -35,7 +35,7 @@ abstract class ChainedException implements Exception {
 
   @override
   @nonVirtual
-  String toString() => _ChainedExceptionFormatter(this).formatted();
+  String toString() => _PrintedChainedException(this).toString();
 
   /// If this [ChainedException] has origin.
   bool hasOrigin();
