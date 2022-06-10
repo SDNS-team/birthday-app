@@ -58,31 +58,3 @@ extension _AsParent on ChainedException {
   /// Represent current exception as origin for consistent printing
   ChainedException asParent() => ChainedException.context(this, '');
 }
-
-void main() {
-  print(fn1());
-  print(fn2());
-}
-
-dynamic fn1() => ChainedException.context(
-      ChainedException.context(
-        ChainedException.origin('User not logged in',
-            vars: {'Tokens': 'expired'}),
-        'When retrieving workouts',
-        vars: {'Retries': 3},
-      ),
-      'When starting app',
-    );
-
-dynamic fn2() => ChainedException.context(
-      ChainedException.context(
-        ChainedException.foreign(
-          Exception('Origin'),
-          'User not logged in',
-          vars: {'Tokens': 'expired'},
-        ),
-        'When retrieving workouts',
-        vars: {'Retries': 3},
-      ),
-      'When starting app',
-    );
