@@ -1,26 +1,30 @@
-import 'package:meta/meta.dart';
+import 'dart:convert';
 
-import 'chained_exception_formatter.dart';
+import 'package:meta/meta.dart';
+import 'package:stack_trace/stack_trace.dart';
+
+part 'chained_exception_formatter.dart';
 
 abstract class ChainedException implements Exception {
   final Map<String, dynamic> _vars;
-  const ChainedException._(this._vars);
+  final StackTrace _trace;
+  ChainedException._(this._vars) : _trace = StackTrace.current;
 
   /// Creates origin exception
-  const factory ChainedException.origin(
+  factory ChainedException.origin(
     String message, {
     Map<String, dynamic> vars,
   }) = _ChainedOrigin;
 
   /// Creates origin from exception from other library
-  const factory ChainedException.foreign(
+  factory ChainedException.foreign(
     Object foreignException,
     String context, {
     Map<String, dynamic> vars,
   }) = _ForeignOrigin;
 
   /// Adds context to previous exception
-  const factory ChainedException.context(
+  factory ChainedException.context(
     ChainedException origin,
     String context, {
     Map<String, dynamic> vars,
@@ -31,17 +35,23 @@ abstract class ChainedException implements Exception {
 
   @override
   @nonVirtual
-  String toString() => ChainedExceptionFormatter(this).formatted();
+  String toString() => _ChainedExceptionFormatter(this).formatted();
 
+  /// If this [ChainedException] has origin.
   bool hasOrigin();
+
+  /// Throws if there is no origin.
+  /// Use [hasOrigin] to check.
   ChainedException origin();
+
+  /// Problem or context
   String message();
 }
 
 class _ChainedOrigin extends ChainedException {
   final String _message;
   @override
-  const _ChainedOrigin(this._message, {Map<String, dynamic> vars = const {}})
+  _ChainedOrigin(this._message, {Map<String, dynamic> vars = const {}})
       : super._(vars);
 
   @override
@@ -59,7 +69,7 @@ class _ChainedOrigin extends ChainedException {
 class _ForeignOrigin extends ChainedException {
   final Object _foreignException;
   final String _context;
-  const _ForeignOrigin(
+  _ForeignOrigin(
     this._foreignException,
     this._context, {
     Map<String, dynamic> vars = const {},
@@ -67,9 +77,8 @@ class _ForeignOrigin extends ChainedException {
 
   @override
   String message() => '''
-        Message: $_context
-        Foreign exception: $_foreignException
-        ''';
+$_context
+Foreign exception: $_foreignException''';
 
   @override
   ChainedException origin() => throw ChainedException.origin(
@@ -83,7 +92,7 @@ class _ForeignOrigin extends ChainedException {
 class _ChainedContext extends ChainedException {
   final ChainedException _origin;
   final String _context;
-  const _ChainedContext(
+  _ChainedContext(
     this._origin,
     this._context, {
     Map<String, dynamic> vars = const {},
