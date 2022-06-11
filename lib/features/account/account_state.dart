@@ -1,5 +1,5 @@
 import 'package:api_mock/api_mock.dart';
-import 'package:birthday_app/features/bootstrap/bootstrap.dart';
+import 'package:core/core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
@@ -16,12 +16,12 @@ Future<void> restoreLogin() async {}
 
 class LoginInteractor {}
 
-class RestoreLogin extends StartupHook {
+class InitAccount extends StartupHook {
   @override
   Future<void> bootstrap() async {
     await Hive.openBox<Map>('login_data');
   }
 
   @override
-  List<Type> deps() => [RestoreHive];
+  Set<Type> deps() => {InitHive};
 }

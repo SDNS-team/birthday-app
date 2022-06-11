@@ -1,8 +1,7 @@
+import 'package:core/core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../bootstrap/bootstrap.dart';
-
-class RestoreHive extends StartupHook {
+class InitHive extends StartupHook {
   @override
   Future<void> bootstrap() async {
     await Hive.initFlutter();
