@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 import 'exception/chained_exception.dart';
 
-/// Implement this class with initialization logic and add it to `deps` in bootstrap.dart
+/// Implement this class with initialization logic and pass to [Bootstrap].
 abstract class StartupHook {
   /// Get things ready: init, restore state, etc.
   @mustCallSuper

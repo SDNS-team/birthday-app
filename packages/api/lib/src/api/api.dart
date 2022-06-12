@@ -1,7 +1,7 @@
 import 'package:api/api.dart';
 import 'package:core/core.dart';
 
-abstract class Api {
+abstract class Api implements Disposable {
   const Api(this.loggedInUser);
   final User loggedInUser;
 

@@ -24,3 +24,5 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "**/*.gql.dart"
+
+linter:

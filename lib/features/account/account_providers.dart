@@ -9,10 +9,19 @@ final loggedInProvider = Provider((ref) => ref.watch(tokensProvider) != null);
 
 final tokensProvider = StateProvider<Tokens?>((ref) => null);
 
+final userProvider = StateProvider<User>(
+  (ref) => const User(email: 'dumb', id: 'dumb'),
+);
+
+final apiProvider = Provider.autoDispose((ref) {
+  final user = ref.watch(userProvider);
+  final api = MockApi(user);
+  ref.onDispose(api.dispose);
+  return api;
+});
+
 final loginInteractorProvider =
     Provider.autoDispose((ref) => LoginInteractor());
-
-Future<void> restoreLogin() async {}
 
 class LoginInteractor {}
 

@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:api/api.dart';
 import 'package:core/core.dart';
-import 'package:rxdart/subjects.dart';
 
 class MockApi extends Api implements Disposable {
   MockApi(User loggedInUser) : super(loggedInUser);

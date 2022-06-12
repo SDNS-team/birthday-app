@@ -9,12 +9,14 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  collection: ^1.16.0
-  directed_graph: ^0.3.7
   flutter:
     sdk: flutter
+
+  collection: ^1.16.0
+  directed_graph: ^0.3.7
   meta: ^1.7.0
   stack_trace: ^1.10.0
+  rxdart: ^0.27.3
 
 
 dev_dependencies:
