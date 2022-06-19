@@ -1,8 +1,5 @@
-import 'package:api_mock/api_mock.dart';
-import 'package:birthday_app/features/account/account_providers.dart';
-
-import '../../../app.dart';
 import '../../../ui.dart';
+import '../account_providers.dart';
 
 class LoginRouteData extends TypedRouteData {
   const LoginRouteData(this.from);
@@ -25,32 +22,23 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final interactor = ref.watch(loginInteractorProvider);
     return CupertinoPageScaffold(
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CupertinoButton.filled(
+              onPressed: () {
+                interactor
+                    .login()
+                    .then((_) => context.goToLocation(data.from ?? '/'));
+              },
               child: const Text('Залогиниться ➡️'),
-              onPressed: () => _login(ref, 'Крутой перец 💪'),
             ),
           ],
         ),
       ),
     );
-  }
-
-  void _login(WidgetRef ref, String name) {
-    ref.read(userProvider.notifier).state = User(
-      id: '__fake__',
-      email: 'fake@email.com',
-      name: name,
-    );
-    ref.read(tokensProvider.notifier).state = const Tokens(
-      accessToken: 'hello',
-      refreshToken: 'world',
-    );
-
-    AppState.instance.login();
   }
 }

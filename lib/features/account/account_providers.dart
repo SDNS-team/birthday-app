@@ -1,16 +1,14 @@
 import 'package:api_mock/api_mock.dart';
-import 'package:core/core.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 
-import '../db/hive.dart';
+import '../../ui.dart';
+import '../router/router.dart';
 
 final loggedInProvider = Provider((ref) => ref.watch(tokensProvider) != null);
 
 final tokensProvider = StateProvider<Tokens?>((ref) => null);
 
 final userProvider = StateProvider<User>(
-  (ref) => const User(email: 'dumb', id: 'dumb'),
+  (ref) => User.anonymous(),
 );
 
 final apiProvider = Provider.autoDispose((ref) {
@@ -21,16 +19,29 @@ final apiProvider = Provider.autoDispose((ref) {
 });
 
 final loginInteractorProvider =
-    Provider.autoDispose((ref) => LoginInteractor());
+    Provider.autoDispose((ref) => LoginInteractor(ref.read));
 
-class LoginInteractor {}
+class LoginInteractor {
+  final Reader _read;
+  const LoginInteractor(this._read);
 
-class InitAccount extends StartupHook {
-  @override
-  Future<void> bootstrap() async {
-    await Hive.openBox<Map>('login_data');
+  Future<void> login() async {
+    _read(userProvider.notifier).state = const User(
+      id: '__fake__',
+      email: 'fake@email.com',
+      name: 'Крутой перец 💪',
+    );
+    _read(tokensProvider.notifier).state = const Tokens(
+      accessToken: 'hello',
+      refreshToken: 'world',
+    );
+
+    _read(routerGuardProvider).login();
   }
 
-  @override
-  Set<Type> deps() => {InitHive};
+  Future<void> logout(BuildContext context) async {
+    _read(routerGuardProvider).logout();
+    // Run redirects to send user to login page
+    GoRouter.of(context).refresh();
+  }
 }

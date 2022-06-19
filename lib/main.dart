@@ -1,16 +1,21 @@
-import 'package:birthday_app/features/account/account_providers.dart';
-import 'package:birthday_app/features/db/hive.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
+import 'features/account/init_account.dart';
+import 'features/db/init_hive.dart';
+import 'features/logging/init_logging.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterError.demangleStackTrace = CoreTrace.demangleForFlutter;
 
   final bootstrap = Bootstrap(
-    [InitHive(), InitAccount()],
+    [
+      InitLogging(),
+      InitHive(),
+      InitAccount(),
+    ],
     enableLogs: true,
   );
 

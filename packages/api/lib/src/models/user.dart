@@ -5,11 +5,16 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
+  const User._();
   const factory User({
     required String id,
     required String email,
     String? name,
   }) = _User;
 
+  factory User.anonymous() => const _User(id: 'dumb', email: 'dumb');
+
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  bool get anonymous => id == 'dumb';
 }

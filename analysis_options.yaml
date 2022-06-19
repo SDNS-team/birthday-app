@@ -1,13 +1,14 @@
 include: package:flutter_lints/flutter.yaml
+
 analyzer:
   errors:
-    todo: ignore # чтобы отображать тудушки
-    unused_import: error # Лишние импорты в проекте не нужны
-    unused_local_variable: error # Неиспользуемые переменные в проекте не нужны
-    missing_required_param: error # Не пропускаем обязательные параметры
-    prefer_relative_imports: error # Относительные импорты в проекте
-    directives_ordering: error # Следим за порядком импортов в проекте
-    unawaited_futures: error # Всегда резолвим Future
+    todo: ignore
+    unused_import: error
+    unused_local_variable: error
+    missing_required_param: error
+    prefer_relative_imports: error
+    directives_ordering: error
+    unawaited_futures: error
     invalid_assignment: error
     missing_return: error
     dead_code: error
@@ -15,14 +16,24 @@ analyzer:
     strict-inference: true
     strict-raw-types: false # Allow skipping generic params
   exclude:
-    - "build/**"
-    - "bin/cache/**"
+    # - "build/**"
+    # - "bin/cache/**"
     # the following two are relative to the stocks example and the flutter package respectively
     # see https://github.com/dart-lang/sdk/issues/28463
-    - "lib/i18n/messages_*.dart"
-    - "lib/src/http/**"
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
-    - "**/*.gql.dart"
+    # - "lib/i18n/messages_*.dart"
+    # - "lib/src/http/**"
+    # - "**/*.g.dart"
+    # - "**/*.freezed.dart"
+    # - "**/*.gql.dart"
 
 linter:
+  rules:
+    unused_import: true
+    unused_local_variable: true
+    missing_required_param: true
+    prefer_relative_imports: true
+    directives_ordering: true
+    unawaited_futures: true
+    invalid_assignment: true
+    missing_return: true
+    dead_code: true

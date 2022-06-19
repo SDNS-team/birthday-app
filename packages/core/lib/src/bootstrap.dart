@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:directed_graph/directed_graph.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 import 'exception/chained_exception.dart';
 
@@ -11,6 +11,8 @@ abstract class StartupHook {
   /// Get things ready: init, restore state, etc.
   @mustCallSuper
   Future<void> bootstrap();
+
+  Future<void> dispose() => Future.value();
 
   /// List of dependencies that should be bootstrapped before this.
   /// Types should subclass [StartupHook].
@@ -32,7 +34,7 @@ class Bootstrap {
     _deps.map((hook) => MapEntry(hook.runtimeType, hook)),
   ));
 
-  Future<void> call() async {
+  DirectedGraph<Type> get _depsGraph {
     final graph = DirectedGraph<Type>(
       {
         for (final hook in _deps) hook.runtimeType: hook.deps(),
@@ -45,13 +47,31 @@ class Bootstrap {
         vars: {'Cycle': graph.cycle.join(' -> ')},
       );
     }
+    return graph;
+  }
 
-    for (final list in graph.localSources!.reversed) {
-      await Future.wait(list.map((t) => _bootstrap(mappedDeps[t]!)));
+  Iterable<Iterable<StartupHook>> get _depsInOrder =>
+      // We get a list like [Type1 -> Type2 -> Type3]
+      // where Type1 depends on Type2 so we reverse it
+      _depsGraph.localSources!.reversed.map(
+        (list) => list.map((type) => mappedDeps[type]!),
+      );
+
+  Future<void> call() async {
+    for (final list in _depsInOrder) {
+      await Future.wait(list.map(_bootstrap));
+    }
+  }
+
+  Future<void> dispose() async {
+    // dispose in opposite order
+    for (final list in _depsInOrder.toList().reversed) {
+      await Future.wait(list.map((d) => d.dispose()));
     }
   }
 
   void _log(String str) {
+    // ignore: avoid_print
     if (enableLogs) print(str);
   }
 
