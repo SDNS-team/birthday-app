@@ -1,14 +1,14 @@
 import 'package:api_mock/api_mock.dart';
 import 'package:flutter/material.dart';
 
-import '../../../ui.dart';
-import '../../account/account_providers.dart';
-import '../../add_friend/view/add_friend_screen.dart';
+import '../../features/account/account_providers.dart';
+import '../../ui/ui.dart';
+import '../add_friend/view/add_friend_screen.dart';
 
 final friendsListProvider = StreamProvider.autoDispose(
-  (ref) {
-    final api = ref.watch(apiProvider);
-    return api.friends().findMany();
+  (ref) async* {
+    final api = await ref.watch(apiProvider.future);
+    yield* api.friends().findMany();
   },
 );
 

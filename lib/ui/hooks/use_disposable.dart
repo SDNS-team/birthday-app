@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 
-import '../../ui.dart';
+import '../ui.dart';
 
 /// Memoized that disposes it's value automatically
 T useDisposable<T>(T Function() builder, void Function(T) dispose) {

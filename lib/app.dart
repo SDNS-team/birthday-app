@@ -1,7 +1,7 @@
-import 'features/account/account_providers.dart';
-import 'features/list_friends/view/frineds_screen.dart';
+import 'package:core/core.dart';
+
 import 'features/router/router.dart';
-import 'ui.dart';
+import 'ui/ui.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -9,12 +9,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
+      observers: [_ProviderObserver()],
       child: Consumer(
         builder: (context, ref, child) {
           final router = ref.watch(routerProvider);
 
           return CupertinoApp.router(
             debugShowCheckedModeBanner: false,
+            // routeInformationProvider: router.routeInformationProvider,
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );
@@ -24,102 +26,37 @@ class App extends StatelessWidget {
   }
 }
 
-class HomeRouteData extends TypedRouteData {
-  final HomeTab tab;
-  const HomeRouteData(this.tab);
-  HomeRouteData.fromState(GoRouterState state)
-      : tab = HomeTab.fromName(state.typedParams.pathString('tab'));
+final _log = Logger('Providers');
 
+class _ProviderObserver implements ProviderObserver {
   @override
-  TypedParamsBuilder get path =>
-      TypedParamsBuilder()..withParam('tab', tab.name);
-
-  @override
-  String name() => 'home';
-
-  int get index => tab.index;
-}
-
-enum HomeTab {
-  calendar,
-  friends,
-  settings;
-
-  factory HomeTab.fromName(String name) {
-    return HomeTab.values.singleWhere((v) => v.name == name);
+  void didAddProvider(
+      ProviderBase provider, Object? value, ProviderContainer container) {
+    _log.info('Added ${provider.name} with $value');
   }
 
   @override
-  String toString() => name;
-}
-
-class HomeScreen extends StatefulWidget {
-  final int tabIndex;
-  const HomeScreen({Key? key, required this.tabIndex}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  late final CupertinoTabController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = CupertinoTabController(initialIndex: widget.tabIndex);
+  void didDisposeProvider(ProviderBase provider, ProviderContainer container) {
+    _log.info('Disposed ${provider.name}');
   }
 
   @override
-  void didUpdateWidget(HomeScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _controller.index = widget.tabIndex;
+  void didUpdateProvider(
+    ProviderBase provider,
+    Object? previousValue,
+    Object? newValue,
+    ProviderContainer container,
+  ) {
+    _log.info('Updated ${provider.name}: $previousValue -> $newValue');
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      controller: _controller,
-      tabBar: CupertinoTabBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.calendar),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person_2_square_stack),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.settings),
-          ),
-        ],
-        onTap: (index) => context.go(HomeRouteData(HomeTab.values[index])),
-      ),
-      tabBuilder: (context, index) {
-        final tab = HomeTab.values[index];
-        switch (tab) {
-          case HomeTab.calendar:
-            return Container();
-          case HomeTab.friends:
-            return const FriendsScreen();
-          case HomeTab.settings:
-            return Consumer(
-              builder: (context, ref, child) => Center(
-                child: CupertinoButton.filled(
-                  child: const Text('Выйти вон 🚪'),
-                  onPressed: () {
-                    ref.read(loginInteractorProvider).logout(context);
-                  },
-                ),
-              ),
-            );
-        }
-      },
-    );
+  void providerDidFail(
+    ProviderBase provider,
+    Object error,
+    StackTrace stackTrace,
+    ProviderContainer container,
+  ) {
+    _log.severe('${provider.name} throwed:\n$error\n$stackTrace');
   }
 }

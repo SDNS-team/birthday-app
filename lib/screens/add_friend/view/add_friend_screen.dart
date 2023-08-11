@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import '../../../app.dart';
-import '../../../ui.dart';
-import '../../account/account_providers.dart';
+import '../../../features/account/account_providers.dart';
+import '../../../screens/home/home_screen.dart';
+import '../../../ui/ui.dart';
 
 final _addFriendInteractorProvider =
     Provider.autoDispose((ref) => AddFriendInteractor(ref.read));
@@ -50,7 +50,7 @@ class AddFriendInteractor {
     required DateTime birthday,
     String? description,
   }) async {
-    final api = _read(apiProvider);
+    final api = await _read(apiProvider.future);
     await api.friends().create(
           name: name,
           birthday: birthday,

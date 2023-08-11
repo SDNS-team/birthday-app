@@ -1,3 +1,9 @@
+# Firebase
+lib/firebase_options.dart
+android/app/google-services.json
+ios/firebase_app_id_file.json
+ios/Runner/GoogleService-info.plist
+
 # Miscellaneous
 *.class
 *.log

@@ -4,7 +4,7 @@ import 'dart:developer' as developer;
 import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../ui.dart';
+import '../../ui/ui.dart';
 
 final loggerSubscriptionProvider =
     StateProvider<StreamSubscription?>((ref) => null);

@@ -1,4 +1,4 @@
-package com.example.birthday_app
+package com.sdns.birthday_app
 
 import io.flutter.embedding.android.FlutterActivity
 

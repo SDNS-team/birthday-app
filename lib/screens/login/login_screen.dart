@@ -1,5 +1,6 @@
-import '../../../ui.dart';
-import '../account_providers.dart';
+import '../../features/account/account_providers.dart';
+import '../../features/account/sign_in/google_sign_in_provider.dart';
+import '../../ui/ui.dart';
 
 class LoginRouteData extends TypedRouteData {
   const LoginRouteData(this.from);
@@ -31,7 +32,7 @@ class LoginScreen extends HookConsumerWidget {
             CupertinoButton.filled(
               onPressed: () {
                 interactor
-                    .login()
+                    .login(GoogleSignInProvider())
                     .then((_) => context.goToLocation(data.from ?? '/'));
               },
               child: const Text('Залогиниться ➡️'),

@@ -4,6 +4,16 @@ import 'dart:math';
 import 'package:api/api.dart';
 import 'package:core/core.dart';
 
+final _log = Logger('MockApi');
+
+class MockLoginApi implements LoginApi {
+  final User mockUser;
+  const MockLoginApi(this.mockUser);
+
+  @override
+  Future<User> me(String accessToken) async => mockUser;
+}
+
 class MockApi extends Api implements Disposable {
   MockApi(User loggedInUser) : super(loggedInUser);
   late final _fr = MockFriendsApi(loggedInUser);
@@ -112,7 +122,7 @@ class MockFriendsApi implements FriendsApi, Disposable {
     int? skip,
   }) {
     if (where != null && createdAt != null || take != null || skip != null) {
-      print(
+      _log.info(
         'Filters and pagination are not supperted in MockApi. ${CoreTrace.frame}',
       );
     }

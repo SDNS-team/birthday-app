@@ -1,6 +1,11 @@
 import 'package:api/api.dart';
 import 'package:core/core.dart';
 
+abstract class LoginApi {
+  /// Retrieve current user information using access token
+  Future<User> me(String accessToken);
+}
+
 abstract class Api implements Disposable {
   const Api(this.loggedInUser);
   final User loggedInUser;
